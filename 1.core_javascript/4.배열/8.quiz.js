@@ -11,22 +11,36 @@
 4. 한 명의 멤버를 정확하게 수정할때까지 프로그램은 계속되어야 합니다.
 */
 
-var tvxq = ["유노윤호", "최강창민", "영웅재중", "믹키유천", "시아준수"];
+var tvxq = ['유노윤호', '최강창민', '영웅재중', '믹키유천', '시아준수'];
 
 while (true) {
-  var modifyTarget = prompt(`현재 멤버: [${tvxq}]\n수정할 이름을 입력하세요.`);
-
-  var idx = tvxq.indexOf(modifyTarget);
-
-  if (idx !== -1) {
-    // 수정 타겟이 있는경우 -> 수정 진행
-    var newName = prompt("새로운 이름을 입력하세요!");
-    tvxq[idx] = newName;
-    //tvxq.splice(idx, 1, newName)/
-    alert(`수정 완료!\n남은 멤버: [${tvxq}]`);
+  var choice = prompt(
+    `현재 멤버: [${tvxq}]\n
+    메뉴를 선택하세요.\n
+    1. 새로운 이름 추가\n
+    2. 기존 이름 삭제\n
+    3. 프로그램 종료`
+  );
+  if (choice === '1') {
+    var newName = prompt('추가할 새로운 멤버의 이름을 입력하세요.');
+    tvxq.push(newName);
+    alert(`${newName}이(가) 추가되었습니다.`);
+  } 
+  else if (choice === '2') {
+    var delName = prompt('삭제할 멤버의 이름을 입력하세요.');
+    var idx = tvxq.indexOf(delName);
+    if (idx !== -1) {
+      tvxq.splice(idx, 1);
+      alert(`${delName}이(가) 삭제되었습니다.`);
+    } else {
+      alert(`${delName}은(는) 잘못된 이름입니다.\n다시 입력하세요!`);
+    }
+  } 
+  else if (choice === '3') {
+    alert('프로그램을 종료합니다.');
     break;
-  } else {
-    // 없는 경우
-    alert(`${modifyTarget}은(는) 잘못된 이름입니다.\n다시 입력하세요!`);
+  } 
+  else {
+    alert('잘못된 입력입니다. 메뉴 번호를 정확하게 입력해주세요.');
   }
 }
