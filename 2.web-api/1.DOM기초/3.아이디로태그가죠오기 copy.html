@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM구조 둘러보기</title>
+</head>
+<body>
+
+  <ul id="fruits">
+    <li class="f-item" id="apple">사가</li>
+    <li class="f-item" id="banana">바나나</li>
+    <li class="f-item" id="grape">포도</li>
+    <li class="f-item" id="peach">복궁아</li>
+  </ul>
+
+  <!-- 요소 = 태그 -->
+  <script>
+    //변수이름에 $가 붙어이쓰면 아~ 태그들어잇겠구나~ 한다는디요 
+    const $banana = document.getElementById('banana');
+    console.log($banana.textContent);
+    $banana.textContent = '바바바바나나나바바바바나나나';
+    $banana.pet = '바나나 원숭이';
+
+    const $peach = document.getElementById('peach');
+    $peach.style['font-style'] = 'italic';
+
+    // id가 grape인 요소 노드객체를 취득하여 
+    // 배경색상 조작을 통해 violet 색으로 조작해
+
+    const $grape = document.getElementById('grape');
+    $grape.style['background'] = 'violet';
+    $grape.style.color = 'blue';
+    $grape.style.['font-size'] = '50px';
+
+
+  </script>
+
+</body>
+</html>

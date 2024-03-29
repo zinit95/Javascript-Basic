@@ -1,3 +1,48 @@
+function min(userList, property) {
+  // userList가 비어있으면 null을 반환
+  if (userList.length === 0) {
+    return null;
+  }
+
+  let minValueUser = userList[0]; // 최소값을 가진 객체를 첫 번째 사용자로 초기화
+
+  // userList를 순회하면서 주어진 속성의 최소값을 찾음
+  for (const user of userList) {
+    if (user[property] < minValueUser[property]) {
+      minValueUser = user;
+    }
+  }
+
+  return minValueUser;
+}
+
+
+function find(callback) {
+  for (const user of userList) {
+    if (callback(user)) {
+      return user;
+    }
+  }
+  return undefined;
+}
+
+function some(callback) {
+  for (const user of userList) {
+    if (callback(user)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function every(callback) {
+  for (const user of userList) {
+    if (!callback(user)) {
+      return false;
+    }
+  }
+  return true;
+}
 
 const userList = [
   {
@@ -15,7 +60,7 @@ const userList = [
     job: '과일',
     address: '서울',
     hobbys: ['푸드파이팅', '테니스'],
-    salary: 2700000,
+    salary: 9700000,
     age: 18,
   },
   {
@@ -39,46 +84,18 @@ const userList = [
 ];
 
 
+console.log('최소 salary를 가진 사용자:', min(userList, 'salary'));
+console.log('최소 age를 가진 사용자:', min(userList, 'age'));
 
 
-
-function find(callback){
-  const addressArry = []; 
- 
-  for(const names of userList){
-    if(names.address === "서울"){ 
-      addressArry.push(names);
-    }
-  }
-  console.log(addressArry[0]);
-  return addressArry;
-}
-find();
-
+// '서울'에 사는 첫 번째 사용자를 찾는 예시
 const firstUserInSeoul = find((user) => user.address === '서울');
-console.log('서울에 사는 첫번째 사용자 : ' , firstUserInSeoul);
+console.log('서울에 사는 첫 번째 사용자:', firstUserInSeoul);
 
-
-
-
-/*
-//서울에 사는 첫번째 사용자를 찾는 예시
-const firstUserInSeoul = find((user) => user.address === '서울');
-console.log('서울에 사는 첫번째 사용자 : ' , firstUserInSeoul);
-
-//급여 5,000,000 이상인 사용자가 하나라도 있는지 확인하는 예시
-const haasHighEarningUser = some((user)=> user.salary >= 500000);
-console.log('급여 5,000,000 이상인 사용자가 있냐? : ' , firstUserInSeoul);
+// 급여 5,000,000 이상인 사용자가 하나라도 있는지 확인하는 예시
+const hasHighEarningUser = some((user) => user.salary >= 5000000);
+console.log('급여가 5,000,000 이상인 사용자가 있는가?:', hasHighEarningUser);
 
 // 모든 사용자가 '서울'에 사는지 확인하는 예시
-const allUserInSeoul = every((user) => user.address === '서울');
-console.log('모든 사용자가 서울에 사는가?: ' , allUserInSeoul);
-
-
-//console.log('최소 salary를 가진 사용자:', min(userList, 'salary'));
-//console.log('최소 age를 가진 사용자:', min(userList, 'age'));
-*/
-
-
-
-
+const allUsersInSeoul = every((user) => user.address === '서울');
+console.log('모든 사용자가 서울에 사는가?:', allUsersInSeoul);

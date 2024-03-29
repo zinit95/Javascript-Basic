@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM구조 둘러보기</title>
+</head>
+<body>
+
+  <ul id="fruits">
+    <li class="f-item ap" id="apple">사가</li>
+    <li class="f-item bn" id="banana">바나나</li>
+    <li class="f-item gp" id="grape">포도</li>
+    <li class="f-item pc" id="peach">복궁아</li>
+  </ul>
+
+  <!-- 요소 = 태그 -->
+  <script>
+    //const $grape = document.querySelector('.gp');
+    //const $grape = document.querySelector('.bn + li');
+    const $grape = document.querySelector('#grape');
+    //const $grape = document.querySelector('#fruits li:nth-child(3)');
+    //const $grape = document.querySelector('#fruits li:nth-child(3)');
+    //const $grape = document.querySelector('.f-item.gp');
+    //유사배열을 배열로 바꾸는 방법 : 대괄호로 감싸서 앞에 ... 쓰기
+    const $fItemList = [...document.querySelectorAll('.f-item')];
+    console.log($grape);
+    $grape.textContent = '씨가 없으면 좋았을텐데 포도';
+    //const $fItemList = document.querySelectorAll('.f-item');
+    //const $fItemList = document.querySelectorAll('.f-item');
+    console.log($fItemList);
+    // for(const $f of $fItemList){
+    //   $f.style.color = 'green';
+    // }
+    $fItemList.forEach($f => {
+      $f.style.color = 'red';
+    })
+    //$fItemList.pop();
+    
+    //유사 배열 : 객체 형태를 유지한 배열 posh,pop,shifr,unshift 못씀
+    const foods = {
+      0 : '짜장믄',
+      1 : '짬봉',
+      2 : '볶음밥',
+      length : 3
+    }
+    console.log(foods[0]);
+    console.log(foods.length);
+    console.log([1,2,3]);
+  </script>
+
+</body>
+</html>

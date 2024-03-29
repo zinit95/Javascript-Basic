@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM구조 둘러보기</title>
+</head>
+<body>
+
+  <ul id="fruits">
+    <li class="f-item">사가</li>
+    <li class="f-item">바나나</li>
+    <li class="f-item">포도</li>
+    <li class="f-item">복궁아</li>
+  </ul>
+
+  <script>
+    //console.log(document);
+    //console.log(document.documentElement);
+    const html = document.documentElement;
+    html.classList.add('my-html'); //html에 class 'my-html' 추가
+
+    console.log(html.children[1]); //body
+    //const body = html.children[1];
+    const body = document.body;
+    body.style.background = 'red';
+
+
+  </script>
+</body>
+</html>
