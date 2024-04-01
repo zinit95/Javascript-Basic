@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="box-item" title="안녕"></div>
+  <script>
+    const $box = document.querySelector('.box');
+    //속성값 참조
+    //div에 있는 title 속성 가져오기 
+    const title = $box.getAttribute('title');
+    console.log(`title : ${title}`);
+    const id = $box.getAttribute('id');
+    console.log(`id : ${id}`);
+
+    //속성값 변경
+    //div의 id값을 vanila로 변경
+    $box.setAttribute('id','vanila');
+
+    //속성값 추가 
+    //추가할 땐 없는 속성을 적는다
+    $box.setAttribute('style','border-radius : 50%');
+
+    //속성값 제거
+    //지우고 싶은 속성값만 적으면 된다 
+    $box.removeAttribute('style'); 
+
+    //속성값 유뮤 확인
+    alert($box.hasAttribute('src'));//false
+    alert($box.hasAttribute('id'));//true
+
+
+
+
+
+  </script>
+</body>
+</html>

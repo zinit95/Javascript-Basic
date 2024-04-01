@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <ul id="fruits">
+      <li>사과</li>
+      <li>바나나</li>
+      <li>포도</li>
+    </ul>
+
+    <script>
+      const $fruits = document.getElementById("fruits");
+      const [$apple, $banana, $grape] = [...$fruits.children];
+
+      //새로운 노드 생성
+      const $newDiv = document.createElement('div');
+      $newDiv.textContent = '빤스';
+
+      //노드 교체 : .replaceChild(new,old)
+      $fruits.replaceChild($newDiv,$banana);
+
+      //노드 삭제 : .removeChild(지우고싶은태그)
+      $fruits.removeChild($apple);
+
+      //자식노드 전체삭제는 없다..하지만!!! 반복문을 통해서 전체 지우기가 있다!
+      //$fruits.innerHTML ='';
+      // [...$fruits.children].forEach($f =>{
+      //   $fruits.removeChild($f);
+      // })
+
+      const $chilren = [...$fruits.children];
+      for(let i = 0; i < $chilren.length; i++){
+        $fruits.removeChild($chilren[i]);
+      }
+
+
+
+
+    </script>
+  </body>
+</html>

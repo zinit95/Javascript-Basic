@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul id="fruits">
+      <li class="fr apple">사과</li>
+      <li class="fr banana">바나나</li>
+      <li class="fr grape">포토</li>
+    </ul>
+
+    <div class="box"></div>
+
+    <script>
+      const $ul = document.getElementById("fruits");
+      //const $children = $ul.children; //찐배열이 아닌 유사배열이다. ul의 자식들을 변수에 할당
+      const $children = [...$ul.children]; //유사배열을 찐 배열로 변경ul의 자식들을 변수에 할당
+      console.log($children);
+      //const $first = $ul.firstChild; //빈값이 출력
+      const $first = $ul.firstElementChild; // firstElementChild를 써야 li 첫번째 자식이 나온다.
+      const $last = $ul.lastElementChild;
+      $first.style.fontSize = "2em";
+      $last.style.color = "violet";
+
+      const $box = document.querySelector(".box");
+      console.log($box.children);
+      console.log($box.hasChildNodes()); //.box안에 자식 여부 물어보기 공백이 있으면 자식으로 판단함
+
+      function hasChildren($tag) {
+        return $tag.children.length > 0;
+        //console.log($box.children);
+        console.log($hasChildren($box));
+        return !!$tag.children.length;
+      }
+    </script>
+  </body>
+</html>

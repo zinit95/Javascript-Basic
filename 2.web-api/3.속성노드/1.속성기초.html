@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="email" id="account" value="abc@def.com" />
+
+    <script>
+      const $input = document.querySelector('input');
+      console.log($input.attributes);
+      console.log($input.attributes[1]); //account
+      console.log($input.attributes.type); //email
+      console.log($input.attributes.type.value); //email
+
+      //$input.attributes.type.value = 'checkbox'; // type을 checkbox로 변경한다
+      //$input.attributes.type.value = 'range'; // type을 renge로 변경한다
+
+      $input.attributes.id.value = 'acc';  //input id를 acc로 변경
+      $input.attributes.value.value = 'zinit@naver.com';//input value값을 zinit@naver.com로 변경
+
+      
+
+      
+
+    </script>
+  </body>
+</html>

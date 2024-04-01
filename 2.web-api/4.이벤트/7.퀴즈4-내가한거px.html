@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      input{
+        width: 30%;
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <textarea class="pixel" type="text" placeholder="글자의 픽셀단위를 입력하세요"></textarea>  -->
+    <input class="pixel" type="text" placeholder="글자의 픽셀단위를 입력하세요">   
+    <p class="text">여기있는 텍스트의 크기를 조정해보세요~!</p>
+    <script>
+      const $pixel = document.querySelector('.pixel');
+      const $text = document.querySelector('.text');
+      $pixel.addEventListener('$pixel', function() {
+          // 이벤트가 발생했을 때 실행될 코드
+      });
+      $pixel.addEventListener('input', () =>{
+        $text.style.fontSize = $pixel.value + 'px';
+      });
+      
+      
+      
+    </script>
+    
+
+
+
+
+
+
+  </body>
+</html>
