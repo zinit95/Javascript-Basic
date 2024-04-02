@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+      }
+
+      #slider {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      #slider img {
+        max-width: 400px;
+        max-height: 300px;
+        display: block;
+        object-fit: cover;
+      }
+
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      button:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="slider">
+      <button id="prev">이전</button>
+      <img
+        id="image"
+        src="https://cdn.huffingtonpost.kr/news/photo/201606/29932_58341.jpeg"
+        style="width: 400px; height: auto"
+      />
+      <!-- <img id="image" src="https://blog.kakaocdn.net/dn/dN4uhe/btr8xWDwbrK/5YjBrelhtJwU2BAcLtEVoK/img.jpg" style="width: 400px; height: auto;"> -->
+      <button id="next">다음</button>
+    </div>
+
+    <script>
+      //이미지 경로를 저장할 배열
+      const images = [
+      'https://cdn.huffingtonpost.kr/news/photo/201606/29932_58341.jpeg',
+      'https://img.ttimes.co.kr/img/201605/2016051318207784117_list_67025.jpg',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdNfdQ0LkYcFh0qLWPf5Z5ntlW77SnliNVLR4uDxj08w&s',
+      'https://imgnn.seoul.co.kr/img/upload/2019/11/27/SSI_20191127152911_V.jpg'
+      ];
+      //이미지 순서 위치 변수로 만들기
+      let currentIndex = 0; //현재 사진 위치
+
+      //이전, 다음버튼 클릭 이벤트
+      const [$prev, $img, $next] = [...document.getElementById('slider').children];
+      // console.log($prev);
+      // console.log($img);
+      // console.log($next);
+      $next.addEventListener('click', function(){
+        //현재 내가 보고있는 이미지가 뱌열의 0번 인덱스라면 
+        // 다음 버튼을 누루믄 1번을 보여줘야 한다
+        currentIndex = (currentIndex + 1) % images.length;
+         //이미지 주소값을 src속성으로 변경
+        $img.setAttribute('src', images[currentIndex]);
+      });
+      $prev.addEventListener('click', function(){
+        //방법1
+        currentIndex = (currentIndex -1 + images.length) % images.length;
+        //방법2
+        // currentIndex--;
+        // if(currentIndex < 0 ){
+        //   ( currentIndex = images.length -1);
+        // }
+        $img.setAttribute('src', images[currentIndex]);
+      });
+    </script>
+  </body>
+</html>

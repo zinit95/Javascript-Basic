@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="height: 5000px;">
+    <p>아무 곳이나 클릭하세요</p>
+    <em class="msg"></em>
+    <hr>
+    <input type="text" id="txt">
+    <p class="show"></p>
+    <script>
+      /*
+      //방법1
+      //문서전체에 클릭 이벤트 걸기
+      document.addEventListener("click", function (event) {
+        // console.log(event);
+        const $em = document.querySelector(".msg");
+        //shiftKey를 누른 상태에서 좌표값 얻기
+        if (event.shiftKey) {
+          $em.textContent = `x : ${event.x}, y : ${event.y}`;
+        } else {
+          $em.textContent = "";
+        }
+        //좌표값 추출하기
+        //$em.textContent = `x : ${event.x}, y : ${event.y}`;
+        console.log(event);
+      });
+      */
+
+      //방법2
+      document.addEventListener('click', ({x, y, shiftKey}) => {
+      // console.log(e);
+      const $em = document.querySelector('.msg');
+
+      if (shiftKey) {
+        $em.textContent = `x: ${x}, y: ${y}`;
+      } else {
+        $em.textContent = '';
+      }
+    });
+    const $txt = document.getElementById('txt');
+    $txt.addEventListener('keyup',(e)=>{
+      //console.log($txt.value);
+      
+      const $show = document.querySelector('.show');
+
+      //input 입력값이 p에 실시간으로 들어간다
+      //$show.textContent = $txt.value;
+      /* */
+      //input 입력값이 enter쳐야 p에 값이 들어간다
+      if(e.key === 'Enter'){
+        $show.textContent = $txt.value;
+        $txt.value = '';
+      }
+    });
+    </script>
+  </body>
+</html>
