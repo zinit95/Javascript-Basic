@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>web-api정리</title>
+</head>
+<body>
+
+
+<script>
+/*
+<ul id="fruits">
+  <li class="f-item ap" id="apple">사가</li>
+  <li class="f-item bn" id="banana">바나나</li>
+  <li class="f-item gp" id="grape">포도</li>
+  <li class="f-item pc" id="peach">복궁아</li>
+</ul>
+*/
+
+const $first = $ul.firstElementChild; // firstElementChild를 써야 li 첫번째 자식이 나온다.
+const $last = $ul.lastElementChild;
+      
+//유사배열을 배열로 바꾸는 방법 : 대괄호로 감싸서 앞에 ... 쓰기
+const $fItemList = [...document.querySelectorAll('.f-item')];
+const $children = [...$ul.children];
+
+//유사 배열 : 객체 형태를 유지한 배열 posh,pop,shifr,unshift 못씀
+const $children = $ul.children; //찐배열이 아닌 유사배열이다..
+
+//.box안에 자식 여부 물어보기
+console.log($box.hasChildNodes());
+
+//html에 텍스트 수정 및 추가 
+$grape.textContent = '씨가 없으면 좋았을텐데 포도';
+
+//attributes 속성값 변경 및 찾기
+console.log($input.attributes);
+console.log($input.attributes[1]); //account
+console.log($input.attributes.type); //email
+console.log($input.attributes.type.value); //email
+$input.attributes.id.value = 'acc';  //input id를 acc로 변경
+$input.attributes.value.value = 'zinit@naver.com';//input value값을 zinit@naver.com로 변경
+
+//getAttribute 속성값 참조 속성 가져오기 , 속성값 변경
+// <div class="box" id="box-item" title="안녕"></div>
+//속성값 참조
+//div에 있는 title 속성 가져오기 
+const title = $box.getAttribute('title');
+const id = $box.getAttribute('id');
+//속성값 변경
+//div의 id값을 vanila로 변경
+$box.setAttribute('id','vanila');
+//속성값 추가 
+//추가할 땐 없는 속성을 적는다
+$box.setAttribute('style','border-radius : 50%');
+//속성값 제거
+//지우고 싶은 속성값만 적으면 된다 
+$box.removeAttribute('style');
+//속성값 유뮤 확인
+alert($box.hasAttribute('src'));//false
+alert($box.hasAttribute('id'));//true
+
+//클래스 추가하기
+//기존의 클레스 뒤에 circle 클레스 추가 
+$box.classList.add('circle'); //class="box green circle"
+$box.classList.add('aaa' ,'bbb' , 'ccc'); //원하는 만큼 클레스 추가 가능함
+$box.classList.add('circle','aaa' ,'bbb' , 'ccc'); //class="box green circle"
+
+//클레스 제거하기, '',''를 해서 여러개 클레스 삭제도 가능하다 
+$box.classList.remove('green');
+
+//버블링 방지 
+document.querySelector('body').onclick = e => alert('body');
+document.querySelector('.root').onclick = e => alert('root');
+document.querySelector('.parent').onclick = e => alert('parent');
+document.querySelector('.child').onclick = e => {
+//버블링 방지 : 이벤트 전파 중단 
+e.stopPropagation();
+  alert('child');
+};
+document.querySelector('.target').onclick = e => {
+//버블링 방지 : 이벤트 전파 중단 
+e.stopPropagation();
+  alert('target');
+};
+
+//`matches` 객체가 css선택자와 일치하는지 확인하는데 사용
+// event target이 #fruits li가 아니라면 retur하라
+if (!e.target.matches('#fruits li')) {
+  return; 
+}
+
+//appendChild : 마지막 자식으로 추가
+$fruits.appendChild($newLi); //$fruits 요소의 마지막에 $newLi 요소를 추가
+
+
+e.preventDefault(); //form의 submit 중단
+
+//버블링
+// 클릭한 버튼이 포함된 label를 탐색
+const $clickLi = e.target.closest('.checkbox');
+
+
+//toggle
+$clickLi.classList.toggle('checked');
+//아래의 if문을 위에 toggle로 대체할 수 있다.
+// if(!$clickLi.classList.contains('checked')) {
+//   $clickLi.classList.add("checked");
+// } else if($clickLi.classList.contains('checked')) {
+//   $clickLi.classList.remove("checked");
+// }
+
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장애물 피하기 게임</title>
+<!-- 챗gtp -->
+<!-- 자바스크립트로 장애물 피하는 게임 만들게 코드 줘 -->
+<style>
+    canvas {
+        border: 1px solid black;
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="480" height="320"></canvas>
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 캐릭터 설정
+    const player = {
+        x: canvas.width / 2,
+        y: canvas.height - 30,
+        width: 30,
+        height: 30,
+        speed: 5,
+        color: 'blue'
+    };
+
+    // 장애물 설정
+    const obstacles = [];
+    const obstacleWidth = 50;
+    const obstacleHeight = 20;
+    const obstacleSpeed = 3;
+
+    function drawPlayer() {
+        ctx.beginPath();
+        ctx.rect(player.x, player.y, player.width, player.height);
+        ctx.fillStyle = player.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawObstacles() {
+        for (let i = 0; i < obstacles.length; i++) {
+            const obstacle = obstacles[i];
+            ctx.beginPath();
+            ctx.rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
+
+    function moveObstacles() {
+        for (let i = 0; i < obstacles.length; i++) {
+            const obstacle = obstacles[i];
+            obstacle.y += obstacleSpeed;
+            if (obstacle.y > canvas.height) {
+                obstacles.splice(i, 1);
+            }
+        }
+    }
+
+    function collisionDetection() {
+        for (let i = 0; i < obstacles.length; i++) {
+            const obstacle = obstacles[i];
+            if (player.x < obstacle.x + obstacle.width &&
+                player.x + player.width > obstacle.x &&
+                player.y < obstacle.y + obstacle.height &&
+                player.y + player.height > obstacle.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawPlayer();
+        drawObstacles();
+        moveObstacles();
+
+        if (collisionDetection()) {
+            alert('게임 오버!');
+            document.location.reload();
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && player.x > 0) {
+            player.x -= player.speed;
+        } else if (e.key === 'ArrowRight' && player.x < canvas.width - player.width) {
+            player.x += player.speed;
+        }
+    });
+
+    function createObstacle() {
+        const x = Math.random() * (canvas.width - obstacleWidth);
+        const y = 0;
+        obstacles.push({ x, y, width: obstacleWidth, height: obstacleHeight });
+    }
+
+    setInterval(createObstacle, 1000);
+
+    draw();
+</script>
+</body>
+</html>
