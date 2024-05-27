@@ -138,60 +138,70 @@
     <script>
 
 
-      function makeMovieListDOM(movies) {
-        
+        // 영화 목록을 생성하고 DOM에 삽입하는 함수
+        function makeMovieListDOM(movies) {
+
+        // HTML 콘텐츠를 저장할 빈 문자열을 초기화
         let tag = '';
 
+        // 영화 객체 배열을 순회하면서 각 영화에 대한 HTML 콘텐츠를 생성
         movies.forEach(({large_cover_image, title, rating, year}) => {
-          tag += `
-          <div class="movie">
-            <div class="img-box">
-                <img src="${large_cover_image}" alt="표지사진">
+            // 각 영화에 대한 HTML 코드를 문자열에 추가
+            tag += `
+            <div class="movie">
+                <div class="img-box">
+                    <img src="${large_cover_image}" alt="표지사진">
+                </div>
+                <div class="inner">
+                    <div class="title">${title}</div>
+                    <div class="year">${year}</div>
+                    <div class="rating">${rating}</div>
+                </div>
             </div>
-            <div class="inner">
-                <div class="title">${title}</div>
-                <div class="year">${year}</div>
-                <div class="rating">${rating}</div>
-            </div>
-          </div>
-          `;
+            `;
         });
 
+        // 생성된 HTML 콘텐츠를 'movie-list' 클래스를 가진 요소에 삽입
         document.querySelector('.movie-list').innerHTML = tag;
-
-      }
-
-      // 영화 API를 호출하는 함수
-      function fetchMovies(condition='download_count') {
-
-        fetch(`https://yts.mx/api/v2/list_movies.json?sort_by=${condition}`)
-          .then(response => response.json())
-          .then(json => {
-            console.log(json.data.movies);
-            makeMovieListDOM(json.data.movies);
-          });
-      }
-
-      // 초기영화 정보 로딩
-      fetchMovies();
-
-      // a태그 클릭이벤트
-      document.querySelector('header .gnb ul').addEventListener('click', e => {
-        // a태그 링크이동 기능 중지
-        e.preventDefault();
-        const id = e.target.id;
-        switch (id) {
-          case 's_rate':
-            fetchMovies('download_count');
-            break;
-          case 's_year':
-            fetchMovies('year');
-            break;
-          case 's_like':
-            fetchMovies('like_count');
-            break;
         }
-      });
+
+        // 영화 API를 호출하는 함수
+        function fetchMovies(condition='download_count') {
+
+        // 지정된 정렬 조건에 따라 YTS API에서 영화 데이터를 가져옴
+        fetch(`https://yts.mx/api/v2/list_movies.json?sort_by=${condition}`)
+            .then(response => response.json()) // 응답을 JSON으로 변환
+            .then(json => {
+                console.log(json.data.movies); // 가져온 영화 데이터를 콘솔에 출력
+                makeMovieListDOM(json.data.movies); // 영화 데이터를 사용하여 DOM을 업데이트
+            });
+        }
+
+        // 페이지 로드 시 초기 영화 정보를 로딩
+        fetchMovies();
+
+        // a 태그 클릭 이벤트 리스너를 추가
+        document.querySelector('header .gnb ul').addEventListener('click', e => {
+        // a 태그의 기본 링크 이동 기능 중지
+        e.preventDefault();
+
+        // 클릭된 요소의 id를 가져옴
+        const id = e.target.id;
+
+        // 클릭된 요소의 id에 따라 정렬 조건을 결정하고 fetchMovies 함수 호출
+        switch (id) {
+            case 's_rate':
+                fetchMovies('download_count'); // 다운로드 수로 정렬
+                break;
+            case 's_year':
+                fetchMovies('year'); // 연도별로 정렬
+                break;
+            case 's_like':
+                fetchMovies('like_count'); // 좋아요 수로 정렬
+                break;
+        }
+        });
+
 
 
       /*
