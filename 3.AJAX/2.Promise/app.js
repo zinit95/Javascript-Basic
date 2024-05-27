@@ -23,9 +23,10 @@ const renderPosts = postList => {
     const $template = document.getElementById('single-post');
     // 템플릿 태그에서 li태그 추출
     const $li = document.importNode($template.content, true);
-    //console.log($li);
-    $li.querySelector('h2').txextContent = post.title;
-    $li.querySelector('p').txextContent = post.body;
+    // console.log($li);
+    $li.querySelector('h2').textContent = post.title;
+    $li.querySelector('p').textContent = post.body;
+
     $postUl.appendChild($li);
   });
 };
@@ -38,4 +39,4 @@ fetch(URL)
     console.log(json);
     // 게시물 정보 화면에 그리기
     renderPosts(json);
-  })
+  });
