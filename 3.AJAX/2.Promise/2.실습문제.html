@@ -136,126 +136,89 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script>
-
-
-        // 영화 목록을 생성하고 DOM에 삽입하는 함수
-        function makeMovieListDOM(movies) {
-
-        // HTML 콘텐츠를 저장할 빈 문자열을 초기화
+      // 영화 목록을 동적으로 생성하는 함수
+      function makeMovieListDOM(movies) {
+        // 영화 리스트를 담을 변수를 초기화합니다.
         let tag = '';
 
-        // 영화 객체 배열을 순회하면서 각 영화에 대한 HTML 콘텐츠를 생성
-        movies.forEach(({large_cover_image, title, rating, year}) => {
-            // 각 영화에 대한 HTML 코드를 문자열에 추가
-            tag += `
-            <div class="movie">
-                <div class="img-box">
-                    <img src="${large_cover_image}" alt="표지사진">
-                </div>
-                <div class="inner">
-                    <div class="title">${title}</div>
-                    <div class="year">${year}</div>
-                    <div class="rating">${rating}</div>
-                </div>
+        // movies 배열의 각 영화 객체를 순회하며 HTML 마크업을 생성합니다.
+        movies.forEach(({id, large_cover_image, title, rating, year}) => {
+          tag += `
+          <div class="movie" data-movie-id="${id}" data-bs-toggle="modal" data-bs-target="#detailModal">
+            <div class="img-box">
+                <img src="${large_cover_image}" alt="표지사진">
             </div>
-            `;
+            <div class="inner">
+                <div class="title">${title}</div>
+                <div class="year">${year}</div>
+                <div class="rating">${rating}</div>
+            </div>
+          </div>
+          `;
         });
 
-        // 생성된 HTML 콘텐츠를 'movie-list' 클래스를 가진 요소에 삽입
+        // 생성된 HTML 마크업을 movie-list 클래스 요소의 innerHTML로 설정합니다.
         document.querySelector('.movie-list').innerHTML = tag;
-        }
+      }
 
-        // 영화 API를 호출하는 함수
-        function fetchMovies(condition='download_count') {
-
-        // 지정된 정렬 조건에 따라 YTS API에서 영화 데이터를 가져옴
+      // 영화 API를 호출하는 함수
+      function fetchMovies(condition='download_count') {
+        // fetch 함수를 이용하여 영화 데이터를 API로부터 가져옵니다.
         fetch(`https://yts.mx/api/v2/list_movies.json?sort_by=${condition}`)
-            .then(response => response.json()) // 응답을 JSON으로 변환
-            .then(json => {
-                console.log(json.data.movies); // 가져온 영화 데이터를 콘솔에 출력
-                makeMovieListDOM(json.data.movies); // 영화 데이터를 사용하여 DOM을 업데이트
-            });
-        }
+          .then(response => response.json())  // 응답을 JSON 형태로 변환합니다.
+          .then(json => {
+            console.log(json.data.movies);  // 가져온 영화 데이터를 콘솔에 출력합니다.
+            makeMovieListDOM(json.data.movies);  // 영화 데이터를 DOM에 렌더링합니다.
+          });
+      }
 
-        // 페이지 로드 시 초기 영화 정보를 로딩
-        fetchMovies();
+      // 초기 영화 정보를 로딩합니다.
+      fetchMovies();
 
-        // a 태그 클릭 이벤트 리스너를 추가
-        document.querySelector('header .gnb ul').addEventListener('click', e => {
-        // a 태그의 기본 링크 이동 기능 중지
-        e.preventDefault();
-
-        // 클릭된 요소의 id를 가져옴
-        const id = e.target.id;
-
-        // 클릭된 요소의 id에 따라 정렬 조건을 결정하고 fetchMovies 함수 호출
+      // 네비게이션 바의 a 태그 클릭 이벤트를 처리합니다.
+      document.querySelector('header .gnb ul').addEventListener('click', e => {
+        e.preventDefault();  // a 태그의 기본 링크 이동 기능을 중지합니다.
+        const id = e.target.id;  // 클릭된 a 태그의 id를 가져옵니다.
         switch (id) {
-            case 's_rate':
-                fetchMovies('download_count'); // 다운로드 수로 정렬
-                break;
-            case 's_year':
-                fetchMovies('year'); // 연도별로 정렬
-                break;
-            case 's_like':
-                fetchMovies('like_count'); // 좋아요 수로 정렬
-                break;
+          case 's_rate':
+            fetchMovies('download_count');  // 다운로드순으로 영화 데이터를 가져옵니다.
+            break;
+          case 's_year':
+            fetchMovies('year');  // 발매연도순으로 영화 데이터를 가져옵니다.
+            break;
+          case 's_like':
+            fetchMovies('like_count');  // 좋아요순으로 영화 데이터를 가져옵니다.
+            break;
         }
-        });
+      });
 
+      // 영화 상세 정보를 모달에 렌더링하는 함수
+      function makeMovieDetailDOM({ 
+        title, small_cover_image, description_full 
+      }) {
+        const $modalTitle = document.querySelector('.modal-title');  // 모달 타이틀 요소를 선택합니다.
+        const $descImg = document.querySelector('.desc-image');  // 모달 이미지 요소를 선택합니다.
+        const $summary = document.querySelector('.movie-description');  // 모달 설명 요소를 선택합니다.
 
+        $modalTitle.textContent = title;  // 모달 타이틀을 영화 제목으로 설정합니다.
+        $summary.textContent = description_full;  // 모달 설명을 영화 설명으로 설정합니다.
+        $descImg.src = small_cover_image;  // 모달 이미지를 영화 이미지로 설정합니다.
+      }
 
-      /*
-        // 내가 한거 
-        document.getElementById('load').addEventListener('click', () => {
-            // 서버에 비동기 통신 요청을 보내야 함.
-            console.log('click!!');
+      // 영화 목록의 영화 클릭 이벤트를 처리합니다.
+      const $movie = document.querySelector('.movie-list');
 
-            const url = 'https://yts.mx/api/v2/list_movies.json';
-            
-            // const response = xhr.response;
-            // const boardList = JSON.parse(response);
-            
-            // 서버에서 게시물 정보 받아오기
-            fetch(url)
-                .then(res => res.json())
-                .then(json => {
-                    const movies = json.data.movies;
-                    renderPosts(movies);
-                });
-            // fetch(URL)
-            // .then(res => res.json())
-            // .then(json => {
-            //     console.log(json);
-            //     // 게시물 정보 화면에 그리기
-            //     renderPosts(json);
-            // });
+      $movie.addEventListener('click', e => {
+        if (!e.target.matches('.movie-list .movie *')) return;  // 클릭된 요소가 영화가 아니면 함수를 종료합니다.
 
+        const movieId = e.target.closest('.movie').dataset.movieId;  // 클릭된 영화의 ID를 가져옵니다.
+        fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${movieId}`)  // 영화 상세 정보를 API로부터 가져옵니다.
+          .then(res => res.json())  // 응답을 JSON 형태로 변환합니다.
+          .then(json => {
+            makeMovieDetailDOM(json.data.movie);  // 영화 상세 정보를 모달에 렌더링합니다.
+          });
+      });
 
-            // 화면에 렌더링
-            const renderPosts = (movies) 에서 (movies)movies 를 뺴고 싶으면 () 만 넣으면 됨
-            const renderPosts = (movies) => {
-                const movieList = document.querySelector('.movie-list');
-                let divContent = '';
-                
-                movies.forEach(movie => {
-                    divContent += `
-                        <div class="movie">
-                            <div class="img-box">
-                                <img src="${movie.url}">
-                            </div>
-                            <div class="inner">
-                                <div class="title">${movie.large_cover_image}</div>
-                                <div class="year">${movie.year}</div>
-                                <div class="rating">${movie.rating}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                movieList.innerHTML = divContent;
-            };
-        });
-        */
     </script>
     
 </body>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <!-- 삭제 버튼 -->
+  <button id="remove">삭제!</button>
+
+  <script>
+    // '삭제' 버튼에 클릭 이벤트를 추가합니다.
+    document.getElementById('remove').onclick = e => {
+
+      // 삭제할 댓글 번호를 변수에 저장합니다.
+      const rno = 5003;
+
+      // fetch 함수를 사용하여 DELETE 요청을 보냅니다.
+      fetch(`http://localhost:8383/api/v1/replies/${rno}`, {
+        method: 'DELETE' // HTTP 메서드를 DELETE로 설정합니다.
+      })
+        .then(res => res.json()) // 응답을 JSON 형식으로 변환합니다.
+        .then(json => {
+          console.log(json); // 변환된 JSON 데이터를 콘솔에 출력합니다.
+        });
+    };
+  </script>
+  
+</body>
+</html>
